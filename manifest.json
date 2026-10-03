@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Snap2Upload",
+  "version": "1.0.0",
+  "description": "Capture screenshots from any browser tab and attach them to an open ChatGPT conversation.",
+  "icons": {
+  "16": "icons/icon16.png",
+  "48": "icons/icon48.png",
+  "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "commands"
+  ],
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "capture-screenshot": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "linux": "Alt+Shift+S"
+      },
+      "description": "Capture current tab and send to ChatGPT"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
